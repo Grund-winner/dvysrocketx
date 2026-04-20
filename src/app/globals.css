@@ -1,0 +1,389 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: #0a0f1a;
+  --color-foreground: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  background: #0a0f1a;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  touch-action: manipulation;
+}
+
+.app {
+  width: 100%;
+  height: 100%;
+  max-width: 430px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Game area */
+.game-area {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+.game-area iframe {
+  position: absolute;
+  top: -10%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  transform: scale(1, 1.5);
+  transform-origin: 50% 0%;
+  touch-action: none;
+}
+
+/* ===== Overlay top - Dark Navy Blue ===== */
+.ov-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 15%;
+  z-index: 20;
+  background: linear-gradient(180deg, #0a0f1a 0%, #0d1525 70%, rgba(13,21,37,.92) 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 10px;
+  padding-top: max(4px, env(safe-area-inset-top));
+}
+
+.ov-top::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(66,165,245,.4) 50%, transparent 100%);
+}
+
+.back-btn {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 5px 12px;
+  border-radius: 8px;
+  background: rgba(21,101,192,.2);
+  border: 1px solid rgba(66,165,245,.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 30;
+  text-decoration: none;
+  color: #42a5f5;
+  font-size: 13px;
+  font-weight: 700;
+  transition: all .2s ease;
+  gap: 4px;
+}
+
+.back-btn:active {
+  transform: translateY(-50%) scale(.95);
+  background: rgba(21,101,192,.35);
+}
+
+.header-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  background: linear-gradient(135deg, #fff 0%, #42a5f5 50%, #1565c0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+}
+
+.status-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.live-dot {
+  width: 6px;
+  height: 6px;
+  background: #00ff88;
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(0,255,136,.7);
+  animation: blink 2s ease-in-out infinite;
+}
+
+.live-dot.off {
+  background: #ff6b6b;
+  box-shadow: 0 0 6px rgba(255,60,60,.7);
+}
+
+.live-dot.warn {
+  background: #ffa500;
+  box-shadow: 0 0 6px rgba(255,165,0,.7);
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .4; }
+}
+
+.ov-status {
+  font-size: 9px;
+  color: rgba(255,255,255,.5);
+  font-weight: 500;
+  letter-spacing: .5px;
+}
+
+.ov-round {
+  font-size: 8px;
+  color: rgba(255,255,255,.35);
+  font-weight: 600;
+  margin-left: 2px;
+}
+
+.ov-logo {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 23px;
+  width: auto;
+  max-width: 80px;
+  object-fit: contain;
+  opacity: .65;
+}
+
+/* ===== Overlay bottom - Dark Navy Blue ===== */
+.ov-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 43%;
+  z-index: 20;
+  background: linear-gradient(180deg, rgba(10,15,26,.88) 0%, #0a0f1a 8%);
+  display: flex;
+  flex-direction: column;
+  padding: 0 14px;
+  padding-bottom: max(10px, env(safe-area-inset-bottom));
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+}
+
+.ov-bottom::-webkit-scrollbar {
+  display: none;
+}
+
+.ov-bottom::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, rgba(66,165,245,.5) 50%, transparent 100%);
+}
+
+/* Prediction section */
+.pred-section {
+  padding: 14px 0 10px;
+  text-align: center;
+  border-bottom: 1px solid rgba(66,165,245,.1);
+}
+
+.pred-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.pred-tag {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: rgba(255,255,255,.4);
+  font-weight: 700;
+}
+
+.pred-data {
+  font-size: 8px;
+  color: rgba(255,255,255,.3);
+  font-weight: 600;
+}
+
+.pred-conf {
+  font-size: 11px;
+  font-weight: 800;
+  color: #42a5f5;
+}
+
+.pred-multi {
+  font-size: 3rem;
+  font-weight: 900;
+  line-height: 1;
+  transition: all .3s ease;
+  margin-bottom: 6px;
+}
+
+.pred-multi.loading {
+  color: rgba(255,255,255,.15) !important;
+  animation: pulse-rx 1.5s ease-in-out infinite;
+  text-shadow: none !important;
+}
+
+@keyframes pulse-rx {
+  0%, 100% { opacity: .3; }
+  50% { opacity: .7; }
+}
+
+.pred-subrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  min-height: 18px;
+}
+
+/* Signal badges */
+.sig {
+  font-size: 8px;
+  padding: 2px 7px;
+  border-radius: 8px;
+  font-weight: 700;
+  white-space: nowrap;
+  letter-spacing: .3px;
+}
+
+.sig.up {
+  background: rgba(0,255,136,.1);
+  color: #00ff88;
+  border: 1px solid rgba(0,255,136,.2);
+}
+
+.sig.down {
+  background: rgba(255,60,60,.1);
+  color: #ff6b6b;
+  border: 1px solid rgba(255,60,60,.2);
+}
+
+.sig.info {
+  background: rgba(66,165,245,.1);
+  color: #42a5f5;
+  border: 1px solid rgba(66,165,245,.2);
+}
+
+/* Promo section */
+.promo-section {
+  padding: 25px 0 4px;
+}
+
+.promo-box {
+  background: linear-gradient(135deg, rgba(21,101,192,.08) 0%, rgba(66,165,245,.04) 100%);
+  border: 1px solid rgba(21,101,192,.15);
+  border-radius: 14px;
+  padding: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.promo-box::before {
+  content: '';
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, rgba(66,165,245,.12) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.promo-title {
+  font-size: 13px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: #fff;
+  position: relative;
+}
+
+.promo-title span {
+  color: #42a5f5;
+}
+
+.promo-modules {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 10px 0;
+  position: relative;
+}
+
+.promo-mod {
+  font-size: 8px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: rgba(66,165,245,.08);
+  color: rgba(255,255,255,.55);
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* Toast - Navy blue */
+.toast {
+  position: fixed;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(21,101,192,.92);
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 25px;
+  font-size: 11px;
+  font-weight: 700;
+  z-index: 999;
+  opacity: 0;
+  transition: opacity .3s;
+  pointer-events: none;
+  max-width: 90%;
+  text-align: center;
+  letter-spacing: .5px;
+  box-shadow: 0 4px 20px rgba(21,101,192,.4);
+}
+
+.toast.show {
+  opacity: 1;
+}
